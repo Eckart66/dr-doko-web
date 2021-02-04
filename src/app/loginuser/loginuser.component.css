@@ -1,0 +1,13 @@
+.loginform {
+    border:black;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 4px;
+    border-style: solid;
+    padding: 4px;
+}
+
+.form-control {
+    padding: 2px;
+    margin: 6px;
+}

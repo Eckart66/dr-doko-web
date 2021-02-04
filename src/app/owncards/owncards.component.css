@@ -1,0 +1,34 @@
+.owncards {
+    height: 18vmin;
+    width: 60vmin; 
+    display: flex;
+    margin-top: 2vmin;
+    flex-direction: row ;
+    align-items: stretch;    
+    background-color: #fff;
+    color: #444;
+  }
+
+.card {
+    height: 20vmin;
+    width: 6vmin; 
+    align-items: stretch;    
+    background-color: #bbb;
+    color: #444;
+  }
+
+.redcard {
+  background-color: #ddd;
+    color: #f00;
+    font-size: 3vmin;
+  }
+
+.blackcard {
+  background-color: #ddd;
+    color: #000;
+    font-size: 3vmin;
+  }
+
+:disabled {
+    background-color: #fff;
+}

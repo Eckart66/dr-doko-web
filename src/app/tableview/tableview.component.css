@@ -1,0 +1,151 @@
+.wrapper {
+    height: 45vmin;
+    width: 90vmin; 
+    z-index: 0;
+    position: relative;
+    background-color: #fff;
+    color: #444;
+  }
+
+  .player {
+    background-color: #444;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+    border-radius: 5px;
+    font-size: 3vmin;
+    height:  8vmin;
+    width: 23vmin;
+    align-content: center;
+    text-align: center;
+  }
+
+  .currentplayer  {
+    background-color: #6b79aa;
+  }
+
+  .a {
+    top: 18vmin;
+    left: 1vmin;
+  }
+  .b {
+    top: 2vmin;
+    left: 31vmin;
+  }
+  .c {
+    top: 18vmin;
+    left: 61vmin;
+  }
+  .d {
+    top: 35vmin;
+    left: 31vmin;
+  }
+
+
+
+  .tableview {
+    background-color: #444;
+    color: #fff;
+
+    z-index: 1;
+    position: absolute;
+    top: 11vmin;
+    left: 25vmin;
+    height: 22vmin;
+    width: 35vmin;
+
+    border-radius: 5px;
+    font-size: 150%;
+    text-align: center;
+    align-content: center;
+  }
+
+  .currentTrick {
+    position: absolute;
+    z-index: 2;
+    background-color: #777;
+    height: 18vmin;
+    width:  31vmin;
+    top: 2vmin;
+    left: 2vmin;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  
+  .lastTrick {
+    position: absolute;
+    z-index: 2;
+    background-color: #777;
+    height: 8vmin;
+    width:  12vmin;
+    top: 4vmin;
+    left: 4vmin;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  
+
+
+  .card {
+    align-items: stretch;    
+    background-color: #bbb;
+    color: #444;
+  }
+
+.redcard {
+    background-color: #ddd;
+    color: #f00;
+    font-size: 4vmin;
+  }
+
+.blackcard {
+    background-color: #ddd;
+    color: #000;
+    font-size: 4vmin;
+  }
+
+  .smallcard {
+    font-size: 2vmin;
+    max-width: 5vmin;
+    text-align: left;
+    padding-left: 0pt;
+  }
+
+  .announcements {
+    position: relative;
+    z-index: 1;
+    top: 0vmin;
+    left: 0px;
+    height: 3vmin;
+    font-size: 80%;
+    text-align: left;
+    background-color: rgba(172, 255, 47, 0.432);
+  }
+
+  .tricks {
+    position: absolute;
+    z-index: 1;
+    top: 5vmin;
+    left: 0px;
+    height: 3vmin;
+    width: 8vmin;
+    font-size: 80%;
+    float:left; 
+    text-align: center;
+    background-color: rgba(47, 255, 64, 0.432);
+  }
+
+  .lead {
+    position: absolute;
+    z-index: 2;
+    top: 5vmin;
+    right: 0px;
+    height: 3vmin;
+    width: 8vmin;
+    font-size: 3vmin;
+    float:right; 
+    text-align: center;
+    background-color: rgba(39, 56, 211, 0.63);
+  }

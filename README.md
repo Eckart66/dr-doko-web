@@ -13,6 +13,7 @@ Build and develop the project:
 
 - call npm install
 - call ng serve to develop the project
+- in your browser navigate to `http://localhost:4200/`.
 
 Prepare distribution: 
 - call ng build

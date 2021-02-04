@@ -1,0 +1,10 @@
+<form  name="form" novalidate>
+    <div class="loginform">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" name="username" [(ngModel)]="user.name" />
+    <label for="password">   Password</label>
+    <input type="password" class="form-control" name="password" [(ngModel)]="user.password"  />
+    <button class="login-button" (click)="doLogin()">Login</button>        
+    <button class="login-button" (click)="doLogoff()">Logoff</button>        
+    </div>    
+</form>

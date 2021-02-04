@@ -1,0 +1,10 @@
+Todo dr-doko-web
+
+- OK: Play: Übergang nach Play: Spiel berechnen (Solo / Normal, Hochzeit, erstmal keine Trumpfabgabe) 
+- OK: optisch: Ausspieler markieren und den der gerade dran ist
+- OK: Anzahl der Stiche beim Spieler, letzter Stich
+- OK: Letzte Karte gespielt: Partner bestimmen, zusammenrechnen, Results pflegen
+- OK: Result-Display, 
+
+- Server: Rest-Api für alle Aktionen (Login/Logoff, NewGame, Reizen/Weiter, PlayCard)
+- Server: Ticker (1 - 5 Sek.) für Updates: bzw. websocket notify update

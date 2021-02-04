@@ -1,0 +1,13 @@
+<div class="owncards">
+<button class="card" *ngFor="let card of ownCards; let i = index" [className]="getCardIsRed(card) ? 'redcard' : 'blackcard'"
+        [disabled]="isCardDisabled[i]" (click)="playCard(i)">{{getCardAsString(card)}}</button>
+</div>
+<!-- <div class="owncards">
+    <button class="card" *ngFor="let card of ownCards1" [className]="getCardIsRed(card) ? 'redcard' : 'blackcard'">{{getCardAsString(card)}}</button>
+</div>
+<div class="owncards">
+    <button class="card" *ngFor="let card of ownCards2" [className]="getCardIsRed(card) ? 'redcard' : 'blackcard'">{{getCardAsString(card)}}</button>
+</div>
+<div class="owncards">
+    <button class="card" *ngFor="let card of ownCards3" [className]="getCardIsRed(card) ? 'redcard' : 'blackcard'">{{getCardAsString(card)}}</button>
+</div> -->

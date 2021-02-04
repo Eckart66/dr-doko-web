@@ -1,0 +1,20 @@
+<div style="margin-top:10px">
+    <button class="actionbutton" *ngIf="soloAnnounce" (click)="announceSolo(2)">DamenSolo</button>
+    <button class="actionbutton" *ngIf="soloAnnounce" (click)="announceSolo(1)">BubenSolo</button>
+    <button class="actionbutton" *ngIf="soloAnnounce" (click)="announceSolo(3)">TrumpfSolo</button>
+    <button class="actionbutton" *ngIf="trumpfAbgabeAllowed" (click)="announceTrumpfAbgabe()">TrumpfAbgabe</button>
+    <button class="actionbutton" *ngIf="fuchsjagdAllowed" (click)="announceFuchsjagd()">Fuchsjagd</button>
+    <button class="actionbutton" *ngIf="hochzeitAllowed" (click)="announceHochzeit(1)">Hochzeit 1. Fehl</button>
+    <button class="actionbutton" *ngIf="hochzeitAllowed" (click)="announceHochzeit(2)">Hochzeit 1. Stich</button>
+    <button class="actionbutton" *ngIf="weiterAllowed" (click)="announceWeiter()">Weiter</button>
+</div>
+<div>
+    <button class="actionbutton" *ngIf="reAllowed" (click)="announceRe()">Re</button>
+    <button class="actionbutton" *ngIf="kontraAllowed" (click)="announceKontra()">Kontra</button>
+    <button class="actionbutton" *ngIf="Keine9Allowed" (click)="announceKein(1)">Keine 90</button>
+    <button class="actionbutton" *ngIf="Keine6Allowed" (click)="announceKein(2)">Keine 60</button>
+    <button class="actionbutton" *ngIf="Keine3Allowed" (click)="announceKein(3)">Keine 30</button>
+    <button class="actionbutton" *ngIf="Keine1Allowed" (click)="announceKein(4)">Schwarz</button>
+</div>
+    <button class="actionbutton" *ngIf="newGameAllowed" (click)="triggerNewGame()">NewGame</button>
+
