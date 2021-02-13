@@ -34,4 +34,5 @@ export interface Table {
     mainplayers: number[];
     fuchsjagd: boolean;
     updateCount: number;
+    adminMode: boolean,
   }

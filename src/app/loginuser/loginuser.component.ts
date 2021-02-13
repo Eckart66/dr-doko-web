@@ -22,7 +22,17 @@ export class LoginuserComponent implements OnInit {
     this.user.token = this.user.name;
     this.tabledataService.loginUser(this.user).subscribe( result => {
       if (result == "ok") {
-        this.currentUserService.setCurrentUser(this.user.name, this.user.name);
+        if (this.user.name === 'Reset' || this.user.name === 'reset') {
+          this.currentUserService.setIsLoggedIn(false);
+          this.currentUserService.setCurrentUser('', '');
+        }
+        else {
+          this.currentUserService.setIsLoggedIn(true);
+          this.currentUserService.setCurrentUser(this.user.name, this.user.name);
+        }
+      }
+      else {
+        this.currentUserService.setIsLoggedIn(false);
       }
     });
 
@@ -32,8 +42,12 @@ export class LoginuserComponent implements OnInit {
 
   doLogoff(): boolean {
     if (this.user.name != '') {
-      this.tabledataService.logoffUser(this.user);
-      this.currentUserService.setCurrentUser('', '');
+      this.tabledataService.logoffUser(this.user).subscribe( result => {
+        if (result == "ok") {
+          this.currentUserService.setCurrentUser('', '');
+          this.currentUserService.setIsLoggedIn(false);
+        }
+      });
       return true;
     }
     return false;

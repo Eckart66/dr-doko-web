@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { User } from './user'
 
@@ -8,7 +8,8 @@ import { User } from './user'
 })
 export class CurrentUserService {
 
-  private user = new Subject<User>();
+  private user = new BehaviorSubject<User>({name: '', password: '', token: ''});
+  private isLoggedIn = false;
 
   constructor() { 
   }
@@ -19,5 +20,14 @@ export class CurrentUserService {
 
   public getCurrentUser() : Observable<User> {
     return this.user;
+  }
+
+  public setIsLoggedIn(isLoggedIn: boolean): void {
+    this.isLoggedIn = isLoggedIn;
+    this.user.next({name: this.user.getValue().name, password: this.user.getValue().password, token: this.user.getValue().token})
+  }
+
+  public getIsLoggedIn(): boolean {
+    return this.isLoggedIn;
   }
 }

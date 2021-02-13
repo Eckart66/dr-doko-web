@@ -116,7 +116,7 @@ router.delete("/api/table/user/:id", (request, response) => {
   // logoff a user
   console.log("reveive logoff user " + request.params['id']);
 
-  if (tabledataImpl.logoff(request.body)) {
+  if (tabledataImpl.logoffUser({name: request.params['id'], token: request.params['id'], password: 'dokoforever'})) {
     response.json("ok");
     updateClients();
   }

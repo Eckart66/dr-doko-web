@@ -32,7 +32,7 @@
     </div>        
     <div [className]="nextPlayerIndex === 0? 'player currentplayer d': 'player d'">
         <div class="announcements">{{announcements[0]}}</div>
-        You: {{playerNames[0]}}
+        {{isLoggedIn ? 'You' : ''}}: {{playerNames[0]}}
         <span class="tricks" *ngIf="tricks[0]">St: {{tricks[0]}}</span>
         <span class="lead"  *ngIf="leadPlayerIndex==0">Lead</span>
     </div>

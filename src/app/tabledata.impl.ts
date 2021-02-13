@@ -33,6 +33,7 @@ export class TabledataImpl implements Table {
   public mainplayers: number[] = [];
   public fuchsjagd: boolean = false;
   public updateCount: number = 0;
+  public adminMode: boolean = false;
 
   constructor() { this.init(); }
 
@@ -55,6 +56,15 @@ export class TabledataImpl implements Table {
   public loginUser(user: User): boolean {
     if (user.password != "dokoforever") {
       return false;
+    }
+    if (user.name === 'ecki') {
+      this.adminMode = true;
+    }
+    if (user.name === 'Reset' || user.name === 'reset') {
+      var currentupdateCount = this.updateCount;
+      this.init();
+      this.updateCount = currentupdateCount + 1;
+      return true;
     }
     let freeplaces = 0;
     for (let i = 0; i < 4; i++) {
@@ -92,8 +102,13 @@ export class TabledataImpl implements Table {
   }
 
   public logoffUser(user: User): boolean {
+    console.log("logoff for user " + user.name + " password " + user.password)
     if (user.password != "dokoforever") {
+      console.log("logoff denied, wrong password")
       return false;
+    }
+    if (user.name === 'ecki') {
+      this.adminMode = false;
     }
     for (let i = 0; i < 4; i++) {
       if (this.players[i].name == user.name) {
@@ -101,13 +116,20 @@ export class TabledataImpl implements Table {
         // free this place
         this.players[i].name = '';
         this.players[i].token = '';
+        this.updateCount++;
         return true; 
       }
     }
+    console.log("logoff denied, player " + user.name + " not found ")
     return false;
   }
 
   public newGame(token: string): boolean {
+
+    if (this.adminMode && token != 'ecki') {
+      return false;
+    }
+
     this.fillDeck();
     if (this.deck.length != 4 * this.cardsPerPlayer)
     {
@@ -137,6 +159,10 @@ export class TabledataImpl implements Table {
   }
 
   public announceWeiter(token: string): boolean {
+    if (this.adminMode && token != 'ecki') {
+      return false;
+    }
+
     if (this.gamePhase == GamePhase.Bidding_FirstOrder) {
       this.gamePhase = GamePhase.Bidding_SecondOrder;
       this.updateCount++;
@@ -181,6 +207,7 @@ export class TabledataImpl implements Table {
     let playerIndex = this.getPlayerIndex(token);
     if (playerIndex >= 0) {
       this.players[playerIndex].calls.Fuchsjagd = announce;
+      this.fuchsjagd = announce;
 
       this.updateCount++;
 
@@ -272,37 +299,34 @@ export class TabledataImpl implements Table {
 
 
 
-  private table: Table[] = [];
-
   private init(): void {
-    this.table = [ { 
-      players: [] ,
-      rules: {
+    this.players = [];
+    this.rules = {
         ShortHand: true,
         SecondDulleTakesFirst: true,
         PointForCharly: true,
         BockAfter_60_60: true,
         ExtraPointForSolo: false,
         MandatorySoloIn3Sets: false
-      },
-      currentLead: 1,
-      cardsPerPlayer: 10,  // e.g. 10 cards
-      deck: [],        // all cards (shuffled): first 10 cards: player 1, next 10 cards player 2 ...
-      deckCurrent: [], // current deck of cards after "Trumpfabgabe"
-      lastTrick: [],    // cards in last trick
-      currentTrick: [], // cards in current trick
-      results: {
+      };
+    this.currentLead= 1;
+    this.cardsPerPlayer= 10;  // e.g. 10 cards
+    this.deck = [];        // all cards (shuffled): first 10 cards: player 1, next 10 cards player 2 ...
+    this.deckCurrent = []; // current deck of cards after "Trumpfabgabe"
+    this.lastTrick = [];    // cards in last trick
+    this.currentTrick = []; // cards in current trick
+    this.results= {
         resultsPerPlayer: [],
         resultSums: [0,0,0,0],
         playerlastTrickCharly: -1,
         resultsPerTeam: []
-      },
-      gamePhase: 0,
-      game: Game.Normal,
-      mainplayers: [],
-      fuchsjagd: false,
-      updateCount: 0
-    }];
+      };
+    this.gamePhase = 0;
+    this.game = Game.Normal;
+    this.mainplayers = [];
+    this.fuchsjagd = false;
+    this.updateCount = 0;
+    this.adminMode = false;
     this.dummyCreatePlayer('helmut');
     this.dummyCreatePlayer('chris');
     this.dummyCreatePlayer('stefan');
@@ -567,27 +591,40 @@ export class TabledataImpl implements Table {
     let cardValues = 0;
 
     let keineX = 0;
+    let doppelkopfs = 0;
+    let canBeDoppelkopf = false;
 
     // count dullen, foxes and values of cards
     // ---------------------------------------
     teamplayers.forEach ( playerIdx => {
       keineX = Math.max(this.players[playerIdx].calls.NoX, keineX);
-      this.players[playerIdx].tricks.forEach (card => {
+      for (let iC = 0; iC < this.players[playerIdx].tricks.length; iC++) {
+        let card = this.players[playerIdx].tricks[iC];
         if (card == 10 + Card.Heart) {
           dullen++;
         }
-        else if (card == 11 + Card.Clubs) {
+        else if (card == 11 + Card.Diamonds) {
           foxes++;
         }
-        cardValues += Card.getValue( card & 15);
-      } );
+        let cardValue = Card.getValue( card & 15);
+        cardValues += cardValue;
+        if ( (iC % 4) == 0 && cardValue >= 10) {
+          canBeDoppelkopf = true;
+        }
+        if (cardValue < 10) {
+          canBeDoppelkopf = false;
+        }
+        if ( (iC % 4) == 3 && cardValue >= 10 && canBeDoppelkopf) {
+          doppelkopfs += 1;
+        }
+      }
 
       for (let i = 0; i < this.cardsPerPlayer; i++) {
         let card = this.deckCurrent[playerIdx * this.cardsPerPlayer + i];
         if (card == 10 + Card.Heart) {
           dullen--;
         }
-        else if (card == 11 + Card.Clubs) {
+        else if (card == 11 + Card.Diamonds) {
           ownfoxes++;
         }
       }
@@ -603,26 +640,75 @@ export class TabledataImpl implements Table {
     if (cardValues == 240) {
       resultsPerTeam.extraPoints = 5;
       resultsPerTeam.extraPointsText = 'Schwarz, ';
+      if (keineX > 0) {
+        resultsPerTeam.extraPoints += keineX;
+        resultsPerTeam.extraPointsText = 'Schwarz, angesagt: ' + TabledataImpl.keineString[keineX];
+      }
     }
     else if (cardValues > 210) {
-      resultsPerTeam.extraPoints = 4;
-      resultsPerTeam.extraPointsText = 'Keine 3, ';
+      if (keineX > 3) {
+        // verloren, zu viel gereizt
+        resultsPerTeam.extraPointsText = 'Keine 3, aber Schwarz gereizt,';
+        resultsPerTeam.extraPoints = -5;
+      }
+      else {
+        resultsPerTeam.extraPoints = 4;
+        resultsPerTeam.extraPointsText = 'Keine 3, ';
+        if (keineX > 0) {
+          resultsPerTeam.extraPoints += keineX;
+          resultsPerTeam.extraPointsText += 'angesagt: ' + TabledataImpl.keineString[keineX];
+        }
+      }
     }
     else if (cardValues > 180) {
-      resultsPerTeam.extraPoints = 3;
-      resultsPerTeam.extraPointsText = 'Keine 6, ';
+      if (keineX > 2) {
+        // verloren, zu viel gereizt
+        resultsPerTeam.extraPointsText = 'Keine 6, aber gereizt: ' + TabledataImpl.keineString[keineX];
+        resultsPerTeam.extraPoints = -2 - 2 * (keineX - 2);
+      }
+      else {
+        resultsPerTeam.extraPoints = 3;
+        resultsPerTeam.extraPointsText = 'Keine 6, ';
+        if (keineX > 0) {
+          resultsPerTeam.extraPoints += keineX;
+          resultsPerTeam.extraPointsText += 'angesagt: ' + TabledataImpl.keineString[keineX];
+        }
+      }
     }
     else if (cardValues > 150) {
-      resultsPerTeam.extraPoints = 2;
-      resultsPerTeam.extraPointsText = 'Keine 9, ';
+      if (keineX > 1) {
+        // verloren, zu viel gereizt
+        resultsPerTeam.extraPointsText = 'Keine 9, aber gereizt: ' + TabledataImpl.keineString[keineX];
+        resultsPerTeam.extraPoints = -1 - 2*(keineX - 1);
+      }
+      else {
+        resultsPerTeam.extraPoints = 2;
+        resultsPerTeam.extraPointsText = 'Keine 9, ';
+        if (keineX > 0) {
+          resultsPerTeam.extraPoints += keineX;
+          resultsPerTeam.extraPointsText += 'angesagt: ' + TabledataImpl.keineString[keineX];
+        }
+      }
     }
     else if (cardValues > 120 || (cardValues == 120 && teamIndex == 1)) {
-      resultsPerTeam.extraPoints = 1;
-      resultsPerTeam.extraPointsText = 'Keine 12, ';
+      if (keineX > 0) {
+        // verloren, zu viel gereizt
+        resultsPerTeam.extraPointsText = 'Keine 12, aber gereizt: ' + TabledataImpl.keineString[keineX];
+        resultsPerTeam.extraPoints = - 2 * keineX;
+      }
+      else {
+        resultsPerTeam.extraPoints = 1;
+        resultsPerTeam.extraPointsText = 'Keine 12, ';
+      }
     }
     if (cardValues >= 120 && teamIndex == 1) {
       resultsPerTeam.extraPoints++;
       resultsPerTeam.extraPointsText += 'Gegen, ';
+    }
+    if (cardValues < 120 && keineX > 0) {
+      // verloren, zu und viel gereizt
+      resultsPerTeam.extraPointsText = 'verloren, zu hoch gereizt: ' + TabledataImpl.keineString[keineX];
+      resultsPerTeam.extraPoints += - 2 * keineX;
     }
 
     if (this.game != Game.BubenSolo && this.game != Game.DamenSolo && this.game != Game.TrumpfSolo ) {
@@ -663,6 +749,13 @@ export class TabledataImpl implements Table {
         resultsPerTeam.extraPointsText += ' Charly, ';
       }
 
+      // points for doppelkopfs
+      if (doppelkopfs > 0) {
+        resultsPerTeam.extraPoints += doppelkopfs;
+        resultsPerTeam.extraPointsText += doppelkopfs.toString() + ' Doppelk, ';
+      }
+
+
     }
 
 
@@ -702,4 +795,5 @@ export class TabledataImpl implements Table {
     resultsPerTeam.extraPointsText += resultsPerTeam.extraPoints.toString() + " Points."
   }
 
+  private static keineString = ['', 'Keine 9', 'Keine 6', 'Keine 3', 'Schwarz'];
 }

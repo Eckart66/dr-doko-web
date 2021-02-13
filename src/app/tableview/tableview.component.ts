@@ -24,6 +24,7 @@ export class TableviewComponent implements OnInit {
   lastTrick: number[] = [];
   currentUser: User = {name: "", token: "", password: ""};
   iCurrentUserIndex: number = 0;
+  isLoggedIn = false;
 
   updateCount = -1;
 
@@ -36,6 +37,7 @@ export class TableviewComponent implements OnInit {
     });
     this.currentUserService.getCurrentUser().subscribe(newCurrentUser => {
       this.currentUser = newCurrentUser;
+      this.isLoggedIn = this.currentUserService.getIsLoggedIn();
       this.updateData();
     });
   }
