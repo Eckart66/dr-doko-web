@@ -42,6 +42,14 @@ export class OwncardsComponent implements OnInit {
 
   }
 
+  getOffset(i:number): String {
+    return (8*i).toString() + "vmin";
+  }
+
+  getImage(i: number): String {
+    return "url(assets/heartsking.png)";
+  }
+
   private updateData(): void {
     this.tabledataService.getTable().pipe(take(1)).subscribe ( table => {
 
@@ -54,6 +62,7 @@ export class OwncardsComponent implements OnInit {
         }
       }
 
+      // this.ownCards = [17,26,27, 60, 42,43,44, 76,77];  // for test
       this.ownCards = table.players[this.iCurrentPlayerIndex].sortedCards;
       this.ownCards1 = table.players[(this.iCurrentPlayerIndex + 1) % 4].sortedCards;
       this.ownCards2 = table.players[(this.iCurrentPlayerIndex + 2) % 4].sortedCards;
@@ -90,6 +99,10 @@ export class OwncardsComponent implements OnInit {
  
   public getCardAsString(card: number): string {
     return OwncardsComponent.colorStrings[((card & (7*16)) / 16)] + OwncardsComponent.valueStrings[card&15];
+  }
+
+  public getCardAsImage(card: number): string {
+    return Card.getCardAsImage(card);
   }
 
   public getCardIsRed(card: number): boolean {

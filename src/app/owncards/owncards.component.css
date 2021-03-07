@@ -10,24 +10,60 @@
   }
 
 .card {
-    height: 20vmin;
-    width: 6vmin; 
-    align-items: stretch;    
-    background-color: #bbb;
-    color: #444;
-  }
+  background-color:  #FFF;
+  color: #0000;
+  font-size: 3vmin;
+  width: 12vmin; 
+  min-width: 15vmin;
+  min-height: 20vmin;
+  height: 20vmin;
+  position: absolute;
+  padding: 0px;
+  z-index: 1;
+  border-style: none;
+}
 
 .redcard {
-  background-color: #ddd;
+    background-color: #ddd;
     color: #f00;
     font-size: 3vmin;
+    width: 12vmin; 
+    min-width: 15vmin;
+    min-height: 30vmin;
+    position: absolute;
+    z-index: 1;
+
   }
 
 .blackcard {
   background-color: #ddd;
-    color: #000;
-    font-size: 3vmin;
-  }
+  color: #000;
+  font-size: 3vmin;
+  width: 12vmin; 
+  min-width: 15vmin;
+  min-height: 30vmin;
+  position: absolute;
+  z-index: 1;
+}
+
+.cardimage {
+  padding:0px;
+  height: 100%;
+  border:solid;
+  border-color:black;
+  border-radius: 10px;
+  border-width: 1px;
+}
+
+.cardimagedisabled {
+  padding:0px;
+  height: 100%;
+  border:solid;
+  border-color:black;
+  border-radius: 10px;
+  border-width: 1px;
+  opacity:0.5;
+}
 
 :disabled {
     background-color: #fff;

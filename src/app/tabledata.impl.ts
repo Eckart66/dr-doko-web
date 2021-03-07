@@ -596,6 +596,7 @@ export class TabledataImpl implements Table {
 
     // count dullen, foxes and values of cards
     // ---------------------------------------
+
     teamplayers.forEach ( playerIdx => {
       keineX = Math.max(this.players[playerIdx].calls.NoX, keineX);
       for (let iC = 0; iC < this.players[playerIdx].tricks.length; iC++) {
@@ -603,7 +604,7 @@ export class TabledataImpl implements Table {
         if (card == 10 + Card.Heart) {
           dullen++;
         }
-        else if (card == 11 + Card.Diamonds) {
+        else if (card == 1 + Card.Diamonds) {
           foxes++;
         }
         let cardValue = Card.getValue( card & 15);
@@ -624,7 +625,7 @@ export class TabledataImpl implements Table {
         if (card == 10 + Card.Heart) {
           dullen--;
         }
-        else if (card == 11 + Card.Diamonds) {
+        else if (card == 1 + Card.Diamonds) {
           ownfoxes++;
         }
       }

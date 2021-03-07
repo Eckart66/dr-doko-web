@@ -7,33 +7,37 @@
     <div [className]="nextPlayerIndex === 1? 'player currentplayer a': 'player a'"> 
         <div class="announcements">{{announcements[1]}}</div>
         <div class="lead" *ngIf="leadPlayerIndex==1">Lead</div>
-        {{playerNames[1]}}
+        &nbsp; {{playerNames[1]}}
         <div class="tricks" *ngIf="tricks[1]">St: {{tricks[1]}}</div>
+        <div class="playerimage"><img style="height:100%" src={{getPlayerImage(1)}} /></div>
     </div>
     <div [className]="nextPlayerIndex === 2? 'player currentplayer b': 'player b'">
         <div class="announcements">{{announcements[2]}}</div>
         <span class="lead" *ngIf="leadPlayerIndex==2">Lead</span>
-        {{playerNames[2]}}
+        &nbsp; {{playerNames[2]}}
         <div class="tricks" *ngIf="tricks[2]">St: {{tricks[2]}}</div>
+        <div class="playerimage"><img style="height:100%" src={{getPlayerImage(2)}} /></div>
     </div>
     <div class="table">
         <div class="tableview">
             <div class="currentTrick">
-                <button class="card" *ngFor="let card of currentTrick; let i = index" [className]="getCardIsRed(card) ? 'redcard' : 'blackcard'"
-                   disabled >{{getCardAsString(card)}}</button>
+                <button [style.margin-left]="getOffset(i)" class="card" *ngFor="let card of currentTrick; let i = index" 
+                   disabled ><img class="cardimage" src={{getCardAsImage(card)}} /></button>
             </div>
         </div>
     </div>
     <div [className]="nextPlayerIndex === 3? 'player currentplayer c': 'player c'">
         <div class="announcements">{{announcements[3]}}</div>
-        {{playerNames[3]}}
+        &nbsp; {{playerNames[3]}}
         <div class="tricks" *ngIf="tricks[3]">St: {{tricks[3]}}</div>
         <div class="lead" *ngIf="leadPlayerIndex==3">Lead</div>
+        <div class="playerimage"><img style="height:100%" src={{getPlayerImage(3)}} /></div>
     </div>        
     <div [className]="nextPlayerIndex === 0? 'player currentplayer d': 'player d'">
         <div class="announcements">{{announcements[0]}}</div>
-        {{isLoggedIn ? 'You' : ''}}: {{playerNames[0]}}
+        &nbsp; {{isLoggedIn ? 'You' : ''}}: {{playerNames[0]}}
         <span class="tricks" *ngIf="tricks[0]">St: {{tricks[0]}}</span>
         <span class="lead"  *ngIf="leadPlayerIndex==0">Lead</span>
+        <div class="playerimage"><img style="height:100%" src={{getPlayerImage(0)}} /></div>
     </div>
 </div>

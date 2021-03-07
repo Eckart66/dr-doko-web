@@ -19,6 +19,14 @@ The web ui is developped with Angular. The backend is implemented as a simple RE
   In the directory dist/dr-doko-web you can now start the server 
   node doko-server.js
 
+### Distribute to glitch.com: 
+after npm run build:
+- distribute the dist/dr-doko-web directory
+- add the assets from src/assets to glitch assets
+- modify dist/doko-server.js to a file named "server.js" with the additions described in src/app/glitch_server.js:
+  (add and use the assets.js module, change the listener port)
+  and distribute server.js
+
 ### Develop the project
 - like above: 
   call npm run build and 

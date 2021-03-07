@@ -1,6 +1,6 @@
 <div class="owncards">
-<button class="card" *ngFor="let card of ownCards; let i = index" [className]="getCardIsRed(card) ? 'redcard' : 'blackcard'"
-        [disabled]="isCardDisabled[i]" (click)="playCard(i)">{{getCardAsString(card)}}</button>
+<button [style.margin-left]="getOffset(i)" class="card" *ngFor="let card of ownCards; let i = index" 
+        [disabled]="isCardDisabled[i]" (click)="playCard(i)"><img [className]="isCardDisabled[i] ? 'cardimagedisabled': 'cardimage'" src={{getCardAsImage(card)}} /></button>
 </div>
 <!-- <div class="owncards">
     <button class="card" *ngFor="let card of ownCards1" [className]="getCardIsRed(card) ? 'redcard' : 'blackcard'">{{getCardAsString(card)}}</button>

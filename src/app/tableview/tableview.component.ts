@@ -4,6 +4,7 @@ import { TabledataService } from '../tabledata.service';
 import { CurrentUserService } from '../current-user.service';
 import { Calls } from '../calls';
 import { User } from '../user';
+import { Card } from '../card';
 
 @Component({
   selector: 'app-tableview',
@@ -53,10 +54,37 @@ export class TableviewComponent implements OnInit {
     return TableviewComponent.colorStrings[((card & (7*16)) / 16)] + TableviewComponent.valueStrings[card&15];
   }
 
+  getOffset(i:number): String {
+    return (6*i).toString() + "vmin";
+  }
+
+  public getCardAsImage(card: number): string {
+    return Card.getCardAsImage(card);
+  }
+
   public getCardIsRed(card: number): boolean {
     return ((card & (7*16)) < 48);
   }
 
+  public getPlayerImage(i: number): string
+  {
+    const name = this.playerNames[i].toLowerCase();
+    if (name.indexOf("eck")>= 0) {
+      return "assets/ecki.png";
+    }
+    else if (name.indexOf("chris")>= 0) {
+      return "assets/chris.png";
+    }
+    else if (name.indexOf("helm")>= 0) {
+      return "assets/helmut.png";
+    }
+    else if (name.indexOf("stef")>= 0) {
+      return "assets/stefan.png";
+    }
+
+    return "";
+
+  }
 
   private updateData(): void {
     this.tabledataService.getTable().pipe(take(1)).subscribe ( table => {
@@ -76,6 +104,7 @@ export class TableviewComponent implements OnInit {
         this.announcements[i] = this.getAnnouncementAsString(players[(i + this.iCurrentUserIndex) % 4].calls)
         this.tricks[i] = Math.floor( players[(i + this.iCurrentUserIndex) % 4].tricks.length / 4 );
       }
+      // this.currentTrick = [17, 43, 61, 76];
       this.currentTrick = table.currentTrick;
       this.lastTrick = table.lastTrick;
       this.leadPlayerIndex = (table.currentLead + 4 - this.iCurrentUserIndex ) % 4;

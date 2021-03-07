@@ -17,7 +17,7 @@
     height:  8vmin;
     width: 23vmin;
     align-content: center;
-    text-align: center;
+    text-align: left;
   }
 
   .currentplayer  {
@@ -89,9 +89,18 @@
 
 
   .card {
-    align-items: stretch;    
-    background-color: #bbb;
+    background-color: #0000;
     color: #444;
+    font-size: 3vmin;
+    width: 12vmin; 
+    min-width: 12vmin;
+    min-height: 18vmin;
+    height: 12vmin;
+    position: absolute;
+    padding: 0px;
+    z-index: 1;
+    border-style: none;
+  
   }
 
 .redcard {
@@ -113,6 +122,15 @@
     padding-left: 0pt;
   }
 
+  .cardimage {
+    padding:0px;
+    height: 100%;
+    border:solid;
+    border-color:black;
+    border-radius: 10px;
+    border-width: 1px;
+  }
+    
   .announcements {
     position: relative;
     z-index: 1;
@@ -127,11 +145,11 @@
   .tricks {
     position: absolute;
     z-index: 1;
-    top: 5vmin;
+    top: 6vmin;
     left: 0px;
-    height: 3vmin;
+    height: 2vmin;
     width: 8vmin;
-    font-size: 80%;
+    font-size: 70%;
     float:left; 
     text-align: center;
     background-color: rgba(47, 255, 64, 0.432);
@@ -139,7 +157,7 @@
 
   .lead {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     top: 5vmin;
     right: 0px;
     height: 3vmin;
@@ -148,4 +166,18 @@
     float:right; 
     text-align: center;
     background-color: rgba(39, 56, 211, 0.63);
+  }
+
+  .playerimage {
+    position: absolute;
+    z-index: 2;
+    top: 0vmin;
+    right: 0px;
+    height: 100%;
+    width: 8vmin;
+    font-size: 3vmin;
+    float:right; 
+    text-align: center;
+    background-color: rgba(0,0, 0, 0);
+
   }

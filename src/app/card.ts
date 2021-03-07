@@ -62,6 +62,16 @@ export class Card {
             || ( ((card_in & 0x70) == Card.Diamonds) && !isBDSolo) );
         }
       
+    public static   getCardAsImage(card: number): string {
+        let color = ((card & 0x70) == Card.Diamonds ? "diamonds" : (
+                     (card & 0x70) == Card.Heart ? "hearts" : (
+                     (card & 0x70) == Card.Spade ? "spades" : "clubs"
+                     )));
+    
+        return "assets/" + color + (card & 15).toString() + ".png"
+    //    return OwncardsComponent.colorStrings[((card & (7*16)) / 16)] + OwncardsComponent.valueStrings[card&15];
+      }
+    
   
 
     public static Diamonds = 16 | 0;
